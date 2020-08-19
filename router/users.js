@@ -7,9 +7,22 @@ const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
 const db = require('../config/db.js');
 const userMiddleware = require('../middleware/users.js');
+var multer = require('multer');
+var path = require('path');
 
+UsersRouter.use(bodyParser.urlencoded({ extended: false }));
 UsersRouter.use(bodyParser.json());
 UsersRouter.use(cors());
+
+var storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null,'./public/image/uploads')
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+});
+var upload = multer({storage: storage});
 
 UsersRouter.get('/userstest' , (req , res , next)=>{
     res.status=200;
@@ -17,7 +30,7 @@ UsersRouter.get('/userstest' , (req , res , next)=>{
     res.json({ hi: "hello world!" })
     });
 
-    UsersRouter.post('/sign-up', userMiddleware.validateRegister,  (req, res, next) => {
+    UsersRouter.post('/sign-up', upload.single('profile'), userMiddleware.validateRegister,  (req, res, next) => {
             db.query(`SELECT * FROM users WHERE LOWER(username) = LOWER(${db.escape(req.body.username)});`,(err, result) => {
                 if (result.length) {
                   return res.status(409).send({
@@ -31,8 +44,14 @@ UsersRouter.get('/userstest' , (req , res , next)=>{
                         msg: err
                       });
                     } else {
+                      if (!req.file) {
+                        console.log("No file received");
+                      } else {
+                        console.log('file received');
+                      }
+
                       // has hashed pw => add to database
-                      db.query(`INSERT INTO users (id, username, password, registered) VALUES ('${uuid.v4()}', ${db.escape(req.body.username)}, ${db.escape(hash)}, now())`,(err, result) => {
+                      db.query(`INSERT INTO users (id, username, password, profile_pic, registered) VALUES ('${uuid.v4()}', ${db.escape(req.body.username)}, ${db.escape(hash)},${db.escape(req.file.path)}, now())`,(err, result) => {
                           if (err) {
                             throw err;
                             return res.status(400).send({
