@@ -19,7 +19,7 @@ var storage = multer.diskStorage({
     cb(null,'./public/image/uploads')
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+    cb(null,'IMG-' + Date.now() + path.extname(file.originalname))
   }
 });
 var upload = multer({storage: storage});
@@ -51,7 +51,7 @@ UsersRouter.get('/userstest' , (req , res , next)=>{
                       }
 
                       // has hashed pw => add to database
-                      db.query(`INSERT INTO users (id, username, password, profile_pic, registered) VALUES ('${uuid.v4()}', ${db.escape(req.body.username)}, ${db.escape(hash)},${db.escape(req.file.path)}, now())`,(err, result) => {
+                      db.query(`INSERT INTO users ( username, password, profile_pic, registered) VALUES ( ${db.escape(req.body.username)}, ${db.escape(hash)},${db.escape(req.file.filename)}, now())`,(err, result) => {
                           if (err) {
                             throw err;
                             return res.status(400).send({
