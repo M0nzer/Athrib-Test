@@ -30,11 +30,10 @@ module.exports = {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token,'SECRETKEY');
         req.userData = decoded;
-        console.log(req.userData.username);
         next();
       } catch (err) {
         return res.status(401).send({
-          msg: 'Your session is not valid!'
+          msg: 'You May Need To Login Again Because Your session experied...'
         });
       }
     }
