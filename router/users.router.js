@@ -16,7 +16,7 @@ UsersRouter.use(cors());
 
 var storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null,'./public/image/uploads')
+    cb(null,'./public/image/Profile')
   },
   filename: (req, file, cb) => {
     cb(null,'IMG-' + Date.now() + path.extname(file.originalname))
@@ -51,7 +51,7 @@ UsersRouter.get('/userstest' , (req , res , next)=>{
                       }
 
                       // has hashed pw => add to database
-                      db.query(`INSERT INTO users ( username, password, profile_pic, registered) VALUES ( ${db.escape(req.body.username)}, ${db.escape(hash)},${db.escape(req.file.filename)}, now())`,(err, result) => {
+                      db.query(`INSERT INTO users ( username, password, profile_pic, registered) VALUES ( ${db.escape(req.body.username)}, ${db.escape(hash)},${db.escape(req.file.path)}, now())`,(err, result) => {
                           if (err) {
                             throw err;
                             return res.status(400).send({
