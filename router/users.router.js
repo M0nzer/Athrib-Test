@@ -1,9 +1,9 @@
 const express = require('express');
 const UsersRouter = express.Router();
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-const uuid = require('uuid');
 const jwt = require('jsonwebtoken');
 const db = require('../config/db.js');
 const userMiddleware = require('../middleware/users.js');
@@ -24,11 +24,11 @@ var storage = multer.diskStorage({
 });
 var upload = multer({storage: storage});
 
-UsersRouter.get('/userstest' , (req , res , next)=>{
+UsersRouter.get('/' , (req , res , next)=>{
     res.status=200;
     res.setHeader('Content-Type' , 'application/json');
     res.json({ hi: "hello world!" })
-    });
+          });
 
     UsersRouter.post('/sign-up', upload.single('profile'), userMiddleware.validateRegister,  (req, res, next) => {
             db.query(`SELECT * FROM users WHERE LOWER(username) = LOWER(${db.escape(req.body.username)});`,(err, result) => {
@@ -100,8 +100,7 @@ UsersRouter.get('/userstest' , (req , res , next)=>{
                       },
                       'SECRETKEY', {
                         expiresIn: '7 days'
-                      }
-                    );
+                      });
                     db.query(`UPDATE users SET last_login = now() WHERE id = '${result[0].id}'`);
                     return res.status(200).send({
                       msg: 'Logged in!',
@@ -112,14 +111,47 @@ UsersRouter.get('/userstest' , (req , res , next)=>{
                   return res.status(401).send({
                     msg: 'Username or password is incorrect!'
                   });
-                }
-              );
-            }
-          );
+                });
+              });
+          });
+    
+UsersRouter.put('/updateProfile/:proid' , userMiddleware.isLoggedIn, userMiddleware.profileOwner , upload.single('profile') , (req , res , next)=>{
+  db.query(`SELECT profile_pic FROM users WHERE users.id=${req.params.proid}`, (err , result)=>{
+    if (err){
+      console.log(err);
+    }else{
+      fs.unlinkSync(result[0].profile_pic);
+      bcrypt.hash(req.body.password, 10, (err, hash) => {
+        req.body.password = hash;
+      
+    db.query(`UPDATE users SET profile_pic = ${db.escape(req.file.path)} , username = ${db.escape(req.body.username)}  , password = ${db.escape(req.body.password)} WHERE id = ${req.params.proid};` , (err , result)=>{
+      if (err){
+        console.log(err)
+      }else{
+        res.send(result);
+      }
+    });
+  });
+  }
     });
     
-    UsersRouter.get('/secret-route', userMiddleware.isLoggedIn , (req, res, next) => {
-      res.send('This is the secret content. Only logged in users can see that!');
-    });
+          });
 
-    module.exports = UsersRouter;
+UsersRouter.delete('/deleteProfile/:proid' , userMiddleware.isLoggedIn , userMiddleware.profileOwner , (req , res , next)=>{
+  db.query(`SELECT profile_pic FROM users WHERE users.id=${req.params.proid}`, (err , result)=>{
+    if (err){
+      console.log(err);
+    }else{
+      fs.unlinkSync(result[0].profile_pic);
+            db.query(`DELETE FROM users WHERE users.id=${req.params.proid}`, (err , result)=>{
+              if (err){
+                console.log(err);
+              }else{
+                res.send(result);
+              }
+            });
+          }
+    });
+          });
+
+module.exports = UsersRouter;
