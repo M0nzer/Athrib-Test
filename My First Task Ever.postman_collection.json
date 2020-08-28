@@ -1,0 +1,358 @@
+{
+	"info": {
+		"_postman_id": "57ac43b4-0aad-416f-9300-3976359dda4c",
+		"name": "My First Task Ever",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3232/api/sign-up",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "profile",
+							"type": "file",
+							"src": "/C:/Users/hp/Desktop/1 QBoof90rHUM9ad1B1EOkjA.jpeg"
+						},
+						{
+							"key": "password_repeat",
+							"value": "n2e0z0o0",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "n2e0z0o0",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "monzer",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3232/api/users/sign-up",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"users",
+						"sign-up"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/secret-route",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplciIsInVzZXJJZCI6OTEsImlhdCI6MTU5NzkzMjk4OCwiZXhwIjoxNTk4NTM3Nzg4fQ.QYv2k0WVK3mykR3AoDEwhHAKG7UaLVfAcrsL-ErBelM",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"monzeraa\",\r\n    \"password\" : \"n2e0z0o0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3232/api/users/secret-route",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"users",
+						"secret-route"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/users/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"monzer\",\r\n    \"password\" : \"n2e0z0o0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3232/api/users/login",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/posts/create_post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplcnIiLCJ1c2VySWQiOjk2LCJpYXQiOjE1OTgwMzk1MTcsImV4cCI6MTU5ODY0NDMxN30.zfnc5AwcW0B2pm2tSnZf2AsImMgcwNsyzzagUTE423Y",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplciIsInVzZXJJZCI6OTcsImlhdCI6MTU5ODU5MzkwNCwiZXhwIjoxNTk5MTk4NzA0fQ.QnSRUJFMvS5yjSy0Ur7f77R415FED30ZdHtTYiynioo",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "body",
+							"value": "hellohi",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": [
+								"/C:/Users/hp/Desktop/1 QBoof90rHUM9ad1B1EOkjA.jpeg",
+								"/C:/Users/hp/Desktop/1 t5vk4uW18Rs0CB_lJJvBvw.png",
+								"/C:/Users/hp/Desktop/Annotation 2020-08-03 103034.jpg"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3232/api/posts/create_post",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"posts",
+						"create_post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/posts/update/10",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplcnIiLCJ1c2VySWQiOjk2LCJpYXQiOjE1OTc5OTI1NDcsImV4cCI6MTU5ODU5NzM0N30.jcSbOZM2gh6fnyzDRgX_992FGrTPHvaf-QfXoRu8r30",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplcnIiLCJ1c2VySWQiOjk2LCJpYXQiOjE1OTgwMzk1MTcsImV4cCI6MTU5ODY0NDMxN30.zfnc5AwcW0B2pm2tSnZf2AsImMgcwNsyzzagUTE423Y",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "body",
+							"value": "updated",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": [
+								"/C:/Users/hp/Desktop/Annotation 2020-08-03 103034.jpg",
+								"/C:/Users/hp/Desktop/Annotation 2020-08-08 115848.jpg",
+								"/C:/Users/hp/Desktop/Annotation 2020-08-09 193615.jpg"
+							]
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3232/api/posts/update/23",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"posts",
+						"update",
+						"23"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/posts/getpost/9",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplcnIiLCJ1c2VySWQiOjk2LCJpYXQiOjE1OTgwMzk1MTcsImV4cCI6MTU5ODY0NDMxN30.zfnc5AwcW0B2pm2tSnZf2AsImMgcwNsyzzagUTE423Y",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3232/api/posts/getpost/9",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"posts",
+						"getpost",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/users/updateProfile/96",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5lc25lcyIsInVzZXJJZCI6OTYsImlhdCI6MTU5ODI1NTQyMSwiZXhwIjoxNTk4ODYwMjIxfQ.Lc_h1-mvjVihPZr2uqguj1vVp8lIEr71Im5VRHyfxzQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "profile",
+							"type": "file",
+							"src": "/C:/Users/hp/Desktop/Annotation 2020-08-08 115848.jpg"
+						},
+						{
+							"key": "username",
+							"value": "nesnes",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "n2e0z0o0&;",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3232/api/users/updateProfile/96",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"users",
+						"updateProfile",
+						"96"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/users/deleteProfile/96",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5lc25lcyIsInVzZXJJZCI6OTYsImlhdCI6MTU5ODI1NTQyMSwiZXhwIjoxNTk4ODYwMjIxfQ.Lc_h1-mvjVihPZr2uqguj1vVp8lIEr71Im5VRHyfxzQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3232/api/users/deleteProfile/96",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"users",
+						"deleteProfile",
+						"96"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3232/api/posts/delete/25",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vbnplciIsInVzZXJJZCI6OTcsImlhdCI6MTU5ODU5MzkwNCwiZXhwIjoxNTk5MTk4NzA0fQ.QnSRUJFMvS5yjSy0Ur7f77R415FED30ZdHtTYiynioo",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:3232/api/posts/delete/25",
+					"host": [
+						"localhost"
+					],
+					"port": "3232",
+					"path": [
+						"api",
+						"posts",
+						"delete",
+						"25"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

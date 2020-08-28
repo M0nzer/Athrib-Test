@@ -30,7 +30,15 @@ module.exports = {
         const token = req.headers.authorization.split(' ')[1];
         const decoded = jwt.verify(token,'SECRETKEY');
         req.userData = decoded;
-        next();
+        db.query(`SELECT id FROM users WHERE EXISTS (SELECT id FROM users WHERE users.id = ${db.escape(req.userData.userId)})`, (err , result)=>{
+          if (err){
+            res.send({ERROR : err})
+          }else if (result.length == 0){
+            res.send('you are not a user!')
+          }else{
+            next();
+          }
+        });
       } catch (err) {
         return res.status(401).send({
           msg: 'You Must Be Logining in!'
