@@ -1,10 +1,10 @@
-const express = require('express');
-const PostRouter = express.Router();
-const userMiddleware = require('../middleware/users.js');
-var multer = require('multer');
-var path = require('path');
-const db = require('../config/db.js');
-const fs = require('fs');
+const express = require('express')
+, PostRouter = express.Router()
+, userMiddleware = require('../middleware/users.js')
+, multer = require('multer')
+, path = require('path')
+, db = require('../config/db.js')
+, fs = require('fs');
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -65,7 +65,7 @@ PostRouter.get('/poststest' , (req , res , next)=>{
     });
     });
 
-    PostRouter.get('/:postid'  , (req ,res ,next)=>{
+    PostRouter.get('/:postid'  , userMiddleware.availabilty, (req ,res ,next)=>{
       db.query(`SELECT post.id , users.username , post.body , post.image , post.date FROM post JOIN users ON users.id=post.user WHERE post.id=${req.params.postid}` , (err , result) =>{
         if(err){
           res.send(err);
@@ -81,10 +81,12 @@ PostRouter.get('/poststest' , (req , res , next)=>{
       if (err){
         console.log(err);
       }else{
-        fs.unlinkSync(result[0]);
-      }
-      });
-      var filearray = [];
+        var images = JSON.parse(result[0].image);
+          for(var i = 0; i < images.length; i++){ 
+            fs.unlinkSync(images[i]);
+            }
+        //fs.unlinkSync(result[0].image);
+        var filearray = [];
       //let file = req.files.find(car => filearray.push(car.path) );
       for(let i = 0; i < req.files.length; i++){ 
         filearray.push(req.files[i].path);
@@ -97,16 +99,47 @@ PostRouter.get('/poststest' , (req , res , next)=>{
           res.send(result);
         }
       });
+      }
+      });
+      
     });
 
     PostRouter.delete('/delete/:postid' ,userMiddleware.isLoggedIn ,userMiddleware.availabilty,  userMiddleware.postOwner , (req , res , next)=>{
-      db.query(`DELETE FROM post WHERE ${req.params.postid};` , (err , result)=>{
-        if(err){
-          res.send(err);
+      db.query(`SELECT image FROM post WHERE post.id=${req.params.postid}`, (err , result)=>{
+        if (err){
+          console.log(err);
         }else{
-          res.send(result)
-        }
-      })
+         var images = JSON.parse(result[0].image);
+          for(var i = 0; i < images.length; i++){ 
+            fs.unlinkSync(images[i]);
+            //if(i <= images.length){}
+            }
+            db.query(`DELETE FROM post WHERE post.id=${req.params.postid}`, (err , result)=>{
+              if (err){
+                throw err;
+              }else{
+                res.send({done : true});
+              }
+            });
+          //fs.unlinkSync(result[0]);
+               // db.query(`DELETE FROM post WHERE post.id=${req.params.postid}`, (err , result)=>{
+                  //if (err){
+                  //  res.send(err);
+                //  }else{
+                 //   res.send(result);
+                 // }
+                //});
+              }
+        });
+     
+     
+     // db.query(`DELETE FROM post WHERE ${req.params.postid};` , (err , result)=>{
+      //  if(err){
+       //   res.send(err);
+       // }else{
+        //  res.send(result)
+        //}
+     // });
     });
     module.exports = PostRouter;
 

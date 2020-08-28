@@ -27,7 +27,7 @@ var upload = multer({storage: storage});
 UsersRouter.get('/' , (req , res , next)=>{
     res.status=200;
     res.setHeader('Content-Type' , 'application/json');
-    res.json({ hi: "hello world!" })
+    res.json({ done: 'test' })
           });
 
     UsersRouter.post('/sign-up', upload.single('profile'), userMiddleware.validateRegister,  (req, res, next) => {

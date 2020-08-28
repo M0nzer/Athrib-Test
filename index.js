@@ -14,12 +14,25 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.get('/test' , (req , res , next)=>{
-res.status=200;
+app.get('*' , (req , res , next)=>{
+res.status=404;
 res.setHeader('Content-Type' , 'application/json');
-res.json({ hi: "hello world!" })
+res.send({ Error: "Not Found!" })
 });
-
-
+app.post('*' , (req , res , next)=>{
+    res.status=404;
+    res.setHeader('Content-Type' , 'application/json');
+    res.send({ Error: "Not Found!" })
+    });
+app.put('*' , (req , res , next)=>{
+    res.status=404;
+    res.setHeader('Content-Type' , 'application/json');
+    res.send({ Error: "Not Found!" })
+    });
+app.delete('*' , (req , res , next)=>{
+    res.status=404;
+    res.setHeader('Content-Type' , 'application/json');
+    res.send({ Error: "Not Found!" })
+    });
 app.listen(3232);
-console.log('app listining in on port 3232');
+console.log('Server Running at Port 3232 localhost:3232');

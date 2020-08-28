@@ -51,21 +51,26 @@ module.exports = {
       });
     },
     availabilty: (req , res , next)=>{
-     //`SELECT id FROM post WHERE post.id=${req.params.postid}`
-      var sql = `SELECT id FROM post WHERE EXISTS (SELECT id FROM post WHERE post.id = ${req.params.postid})`
-      db.query(sql, (err , result)=>{
-        if(err){
-          next(err);
-        }
-        if(result.length == 0){
-          return res.status(401).send({
-            msg: 'no post'
-          });
-        }
-        if(result.length >= 0){
-          next();
-        }
-      });
+      if (isNaN(req.params.postid)){
+        res.send({Error : "Id Is Number"});
+      }else{
+//`SELECT id FROM post WHERE post.id=${req.params.postid}`
+var sql = `SELECT id FROM post WHERE EXISTS (SELECT id FROM post WHERE post.id = ${req.params.postid})`
+db.query(sql, (err , result)=>{
+  if(err){
+    next(err);
+  }
+  if(result.length == 0){
+    return res.status(401).send({
+      msg: 'no post'
+    });
+  }
+  if(result.length >= 0){
+    next();
+  }
+});
+      }
+     
     },
     profileOwner : (req , res , next)=>{
       db.query(`SELECT id FROM users WHERE users.id=${req.params.proid}`, (err , result)=>{
