@@ -1,10 +1,10 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var cors = require('cors');
-var app = express();
-//const IndexRouter = require('./router/index.router.js');
-var PostsRouter = require('./router/posts.router.js');
-var UsersRouter = require('./router/users.router');
+var express = require('express')
+        , bodyParser = require('body-parser')
+        , cors = require('cors')
+        , app = express()
+        //, IndexRouter = require('./router/index.router.js')
+        , PostsRouter = require('./router/posts.router.js')
+        , UsersRouter = require('./router/users.router');
 
 //middellware
 //app.use('/api/', IndexRouter);

@@ -4,11 +4,11 @@ const fs = require('fs');
 const bcrypt = require('bcryptjs');
 var bodyParser = require('body-parser');
 var cors = require('cors');
-const jwt = require('jsonwebtoken');
-const db = require('../config/db.js');
-const userMiddleware = require('../middleware/users.js');
-var multer = require('multer');
-var path = require('path');
+const jwt = require('jsonwebtoken')
+    , db = require('../config/db.js')
+    , userMiddleware = require('../middleware/users.js')
+    , multer = require('multer')
+    , path = require('path');
 
 UsersRouter.use(bodyParser.urlencoded({ extended: false }));
 UsersRouter.use(bodyParser.json());

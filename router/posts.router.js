@@ -1,10 +1,10 @@
 const express = require('express')
-, PostRouter = express.Router()
-, userMiddleware = require('../middleware/users.js')
-, multer = require('multer')
-, path = require('path')
-, db = require('../config/db.js')
-, fs = require('fs');
+    , PostRouter = express.Router()
+    , userMiddleware = require('../middleware/users.js')
+    , multer = require('multer')
+    , path = require('path')
+    , db = require('../config/db.js')
+    , fs = require('fs');
 
 var storage = multer.diskStorage({
     destination: (req, file, cb) => {
